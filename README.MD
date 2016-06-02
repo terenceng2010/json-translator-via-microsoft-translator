@@ -5,7 +5,7 @@
 5. for help, run `translate --help`
 
 
-  Usage: translate [options] <file>
+  Usage: translate [options] <file> , of which <file> is the soruce json file
 
   Options:
 
@@ -13,6 +13,10 @@
     -s, --sourcelang <sourcelang>  source language (by default en if not specified)
     -d, --destlang <destlang>      destination language (required)
 
+  If <file> is not provided, sample json would be used to demo the translation.
 
  for example:
  `translate -s fr en.i18n.json`
+ 
+ TODO:
+ output result to a json file
