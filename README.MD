@@ -1,3 +1,8 @@
+TODO:
+==========
+* output result to a json file
+
+
 1. clone this package
 2. setup the microsoft client_id and client_secret by modifying index.js
 3. `sudo npm install -g` inside this package directory
@@ -18,5 +23,3 @@
  for example:
  `translate -s fr en.i18n.json`
  
- TODO:
- output result to a json file
