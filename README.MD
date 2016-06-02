@@ -50,7 +50,7 @@ after running `translate -d fr` . Would become:
   }
 }`
 
-It is helpful if your system use json to store language translation.
+It is helpful if your system (e.g i18next and i18n-node ) use json to store language translation.
 
 
 Get started
