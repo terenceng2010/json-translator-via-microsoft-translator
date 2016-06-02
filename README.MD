@@ -17,6 +17,7 @@
   If source <file> is not provided, sample json would be used to demo the translation.
 
  for example:
+ 
  `translate -s fr en.i18n.json` <-- read from en.18n.json and translate it to french
  
  `translate -s fr -w fr.i18n.json en.i18n.json` <-- read from en.18n.json and translate it to french and write the result to fr.i18n.json
