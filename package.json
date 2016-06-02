@@ -1,0 +1,21 @@
+{
+  "name": "json-translator-via-microsoft-translator",
+  "version": "1.0.0",
+  "description": "give me a json obj, i give you the translation. powered by microsoft translation.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "terenceng2010",
+  "license": "ISC",
+  "dependencies": {
+    "commander": "^2.9.0",
+    "json-pretty": "0.0.1",
+    "lodash": "^4.13.1",
+    "mstranslator": "^2.0.8",
+    "sleep": "^3.0.1"
+  },
+  "bin": {
+    "translate": "./index.js"
+  }
+}
