@@ -12,9 +12,10 @@ program
   .arguments('<file>')
   .option('-s, --sourcelang <sourcelang>', 'source language')
   .option('-d, --destlang <destlang>', 'destination language')
+  .option('-w, --writefile <writefile>', 'write to file')  
   .action(function(file) {
-    console.log('sourceLang: %s destLang: %s file: %s',
-        program.sourcelang, program.destlang, file);
+    console.log('sourceLang: %s destLang: %s file: %s writefile: %s',
+        program.sourcelang, program.destlang, file, program.writefile);
     filePath = file;
   })
   .parse(process.argv);
@@ -25,7 +26,7 @@ if(!program.destlang){
     process.exit();
 }
 
-if(CLIENT_ID == 'YOUR_CLIENT_ID' || 'YOUR_CLIENT_SECRET'){
+if(CLIENT_ID === 'YOUR_CLIENT_ID' || CLIENT_SECRET === 'YOUR_CLIENT_SECRET'){
     console.log('please setup client id and client serect first in index.js first. then reinstall this program by running "sudo npm install -g" ');
     process.exit();
 }
@@ -74,8 +75,6 @@ if(inputJsonFile){
 }
 
 
-
-var sleep = require('sleep');
 var lodash = require('lodash');
 var MsTranslator = require('mstranslator');
 // Second parameter to constructor (true) indicates that
@@ -115,7 +114,6 @@ deepIterateObject(translationObj);
 
 
 console.log('===========start translation=======',totalWords);
-sleep.sleep(3);
 
 var currentWords = 0;
 var finished = lodash.after (totalWords, doRender);
@@ -182,67 +180,27 @@ function deepIterateObjectDoTranslation(obj,parentKey){
 }
 
 deepIterateObjectDoTranslation(translationObj);
-/*
-lodash.forIn(translationObj, function(value, key) {
-    if(lodash.isPlainObject( value )){
-      lodash.forIn(value,function( subValue, subKey){
-          sleep.usleep(1000);
-          client.translate({
-            text: subValue
-            , from: 'en'
-            , to: 'zh'            
-          }, function(err, translatedValue) {
-            
-            if(err){
-                currentCount++;
-                console.log('finished with error',currentCount);
-                finished();
-            }else{
-                //console.log('          ',subKey,' ',translatedValue);
-                translationObj[key][subKey] = translatedValue;
-                currentCount++;
-                console.log('finished',currentCount);
-                finished();                
-            }
 
-          });       
-               //console.log('          ',subKey,' ',subValue);
-      });
-      
-    }else{
-          sleep.usleep(1000);
-          client.translate({
-              text: value
-              , from: 'en'
-              , to: 'zh'            
-          }, function(err, translatedValue) {
-             
-             if(err){
-                 currentCount++;
-                 console.log('finished with error',currentCount);
-                 finished();
-             }else{
-                translationObj[key] = translatedValue;
-                currentCount++;
-                console.log('finished',currentCount);
-                finished();
-                //console.log(key,' ',translatedValue);                 
-             }
 
-          });       
-       //console.log(key, ' ',value);
-    }
-});*/
-
-//from http://stackoverflow.com/a/29622653 
-//limitation: can only sort the first level 's key value pair
-function sortObject(o) {
-    return Object.keys(o).sort().reduce((r, k) => (r[k] = o[k], r), {});
-}
-    
 function doRender(){
     var jsonStringify = require('json-pretty');
     console.log(jsonStringify(newObj) ); //JSON.stringify(sortObject())
-    process.exit();
+    
+    if(program.writefile){
+        var outputFilename = program.writefile;
+
+        fs.writeFile(outputFilename, jsonStringify(newObj), function(err) {
+            if(err) {
+            console.log(err);
+            } else {
+            console.log("JSON saved to " + outputFilename);
+            }
+            process.exit();
+        });      
+    }else{
+       process.exit(); 
+    }
+
+
 } 
 
